@@ -1,3 +1,2 @@
 # RegistroDeVentas
 # RegistroDeVentas
-# RegistroStock
