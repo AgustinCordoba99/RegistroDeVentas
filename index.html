@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="Style.css">
+    <link rel="icon" href="logo.png"> 
+    <title>Trabajo Practico N°1</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+                  <div>
+                    <img class="circulo" src="/logo.png" alt="">
+                    <a>Programación II  Registro de ventas </a>
+                     <a>
+                    <input type="button" value="Agregar" class="btn btn-success" onclick="Agregar()">
+                    <input type="button" value="ver Estadisticas" class="btn btn-primary" onclick="verEstadisticas()">
+                    <input type="button" value="Eliminar Datos" class="btn btn-danger" onclick="eliminar()">
+                     </a>
+
+                    </div>
+                  
+            
+         </nav>
+    </header>
+   
+    <content>
+        <main>
+            <section id="centro">
+                <h4>
+                    Datos &#128187
+                </h4>
+                <form action="">
+
+                    <p>
+                        
+                        <input type="number" name="" id="txtCuil" placeholder="Cuil:">
+                        <input type="text"   name="" id="txtFechaNacimiento" placeholder="Fecha de Nacimiento: ">
+                        <input type="text" name="" id="txtNombre" placeholder="Nombre: ">
+                        <input type="text" name="" id="txtApellido" placeholder="Apellido: ">
+                        
+                        
+                    </p>
+
+                     <p>
+                        <input type="number" name="" id="txtNVendedor" placeholder="Numero de vendedor: ">
+                        <input type="text" name="" id="txtFecha" placeholder="Fecha: ">
+                        <input type="number" name="" id="txtVenta" placeholder="Venta: ">
+                        <input type="number" name="" id="txtTotalVendidos" placeholder="Total de productos vendidos: ">
+                    </p>
+                        
+                        
+
+                </form>
+            </section>
+
+            <section id="centro">
+                <h4>
+                    Listado &#128203
+                </h4>
+                <table>
+
+                    <thead>
+                        <th>Numero Vendedor</th>
+                        <th>Fecha</th>
+                        <th>Cuil</th>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Venta</th>
+                        <th>Cantidad de productos vendidos</th>
+                        
+                        
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <hr>
+            </section>
+
+            <section id="left">
+                <h4 id="centro">Estadísticas &#128202</h4>
+                <form action="">
+
+                    <p>
+                        <label for=""> Venta total acumulada:</label>
+                        <label for="" id="lblVentaTotalAcumulada" class="badge bg-secondary rounded-pill">$0 </label>
+                    </p>
+
+                    <p>
+                        <label for=""> Mayor promedio de ventas: </label>
+                        <label for="" id="lblMayorPromedioVentas" class="badge bg-secondary rounded-pill">0</label>
+                    </p>
+
+                    <p>
+                        <label for=""> Menor promedio de ventas:</label>
+                        <label for="" id="lblMenorPromedioVentas" class="badge bg-secondary rounded-pill">0</label>
+                    </p>
+                    <p>
+                        <label for=""> Vendedor con mas productos vendidos:</label>
+                        <label for="" id="lblVendedorMayor" class="badge bg-secondary rounded-pill">0</label>
+                    </p>
+
+                </form>
+            </section>
+
+        </main>
+
+    </content>
+
+    <footer>
+        <h6>Carrera Analista de Sistemas - Institución Cervantes</h6>
+        <h6>Alumno: Agustin Cordoba </h6>
+        <h6>Matricula:27339</h6>
+        
+    </footer> 
+
+
+
+    <script>
+
+        class Persona {
+
+            constructor(){
+                this.Cuil,
+                this.Apellido,
+                this.Nombre,
+                this.FechaNacimiento
+            }
+            
+           
+        }
+
+
+        class Vendedor extends Persona{
+            constructor() {
+                super(),
+                this.NroVendedor,
+                    this.Venta,
+                    this.CantidadProductosVendidos,
+                    this.Fecha
+
+            }
+            getMejorVendedor(){
+                return `${this.Apellido}, ${this.Nombre},`
+
+            }
+            getCantidadProductosVendidos(){
+                return this.CantidadProductosVendidos
+            }
+            getPromedioInd(){
+                return this.Venta / this.CantidadProductosVendidos
+            }
+
+            getDatosVendedor() {
+                return `N°: ${this.NroVendedor}. Cuil: ${this.Cuil}. Nombre Completo: ${this.Apellido} ${this.Nombre}. Fecha de Nacimiento:${this.FechaNacimiento}. `;
+            }
+            
+           
+        }
+
+    
+
+        let listaVendedores = JSON.parse(  localStorage.getItem("lsVendedores")) || [] ;
+        Listar();  
+
+
+        function Agregar() {
+            const nvendedor = document.getElementById("txtNVendedor")
+            const venta = document.getElementById("txtVenta")
+            const totalVendidos = document.getElementById("txtTotalVendidos")
+            const fecha= document.getElementById("txtFecha")
+            const cuil= document.getElementById("txtCuil")
+            const apellido= document.getElementById("txtApellido")
+            const nombre= document.getElementById("txtNombre")
+            const fechaNacimiento = document.getElementById("txtFechaNacimiento")
+            
+
+
+            let oVendedor = new Vendedor();
+            oVendedor.NroVendedor = nvendedor.value;
+            oVendedor.Venta = venta.value;
+            oVendedor.CantidadProductosVendidos = totalVendidos.value;
+            oVendedor.Fecha = fecha.value;
+            oVendedor.Cuil = cuil.value;
+            oVendedor.Apellido = apellido.value;
+            oVendedor.Nombre = nombre.value;
+            oVendedor.FechaNacimiento = fechaNacimiento.value;
+            
+
+            listaVendedores.push(oVendedor);
+
+            localStorage.removeItem("lsVendedores");
+            localStorage.setItem("lsVendedores", JSON.stringify(listaVendedores))
+
+            //Lisado
+
+            //TD
+            const td0 = document.createElement("td");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const td4 = document.createElement("td");
+            const td5 = document.createElement("td");
+            const td6 = document.createElement("td");
+            const td7 = document.createElement("td");
+            
+
+            td0.innerHTML = ` N°${nvendedor.value}`;
+            td1.innerHTML = fecha.value;
+            td2.innerHTML = cuil.value;
+            td3.innerHTML = apellido.value;
+            td4.innerHTML = nombre.value;
+            td5.innerHTML = fechaNacimiento.value;
+            td6.innerHTML = ` $${venta.value}`;
+            td7.innerHTML = totalVendidos.value;
+           
+           
+
+
+            //TR
+            const tr = document.createElement("tr");
+            tr.appendChild(td0);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+            tr.appendChild(td6);
+            tr.appendChild(td7);
+            
+           
+
+
+            //TBODY
+            const tbody = document.querySelector("tbody");
+            tbody.appendChild(tr);
+
+
+
+
+
+
+            //Limpiar
+            nvendedor.value = "";
+            venta.value = "";
+            totalVendidos.value = "";
+            fecha.value = "";
+            cuil.value = "";
+            nombre.value = "";
+            apellido.value = "";
+            fechaNacimiento.value="";
+            
+
+            //Foco
+            nvendedor.focus();
+
+        }
+
+        function verEstadisticas() {
+            console.log(listaVendedores);
+
+            //Venta total acumulado
+            let VentaTotalAcum = 0;
+
+            //Mejor y menor promedio individual
+            let acumIndividual=0;
+            let prom= 0;
+           
+
+            //Promedio Mayor
+            let prommay= 0;
+            let promdatosMay="";
+            let fechaventamay="";
+
+            //Promedio Menor
+            let prommen = 0;
+            let promdatosMen = "";
+            let b = 0;
+            let fechaventamen="";
+
+            //Mejor vendedor en cantidad de productos
+            let mayvendedor=0;
+            let mejorVendedor="";
+
+
+            for (let obj of listaVendedores) {
+
+                let o = new Vendedor();
+                Object.assign(o,obj);
+
+                
+
+                //Venta total Acumulado 
+                VentaTotalAcum = VentaTotalAcum + parseFloat(o.Venta);
+
+
+                //Vendedor que mas producto vendio 
+                if (o.getCantidadProductosVendidos() > mayvendedor) {
+                    mayvendedor = o.getCantidadProductosVendidos();
+                    mejorVendedor= o.getMejorVendedor();
+
+                
+
+                }
+
+                 
+                 prom = o.getPromedioInd();
+
+                 //Mayor promedio de ventas
+
+                 if (prom > prommay) {
+                    prommay=prom;
+                    fechaventamay=o.Fecha;
+                    promdatosMay = o.getDatosVendedor();
+                
+
+                }
+
+
+
+                 //Menor promedio de ventas
+
+                if (prom < prommen || b == 0) {
+                    prommen=prom;
+                    fechaventamen= o.Fecha;
+                    promdatosMen = o.getDatosVendedor();
+                    b = 1;
+
+                }
+
+               
+
+            }
+
+            
+            
+
+            const  VentaAcumulada = document.getElementById("lblVentaTotalAcumulada");
+            VentaAcumulada.innerHTML = VentaTotalAcum;
+
+            const PromedioMayor = document.getElementById("lblMayorPromedioVentas");
+            PromedioMayor.innerHTML = `Datos del vendedor: ${promdatosMay}. Fecha y Monto:${fechaventamay} y ${prommay}`;
+
+            const PromedioMenor = document.getElementById("lblMenorPromedioVentas");
+            PromedioMenor.innerHTML = `Datos del vendedor: ${promdatosMen}. Fecha y Monto:${fechaventamen} y ${prommen}`
+
+            const MejorVendedor = document.getElementById("lblVendedorMayor");
+            MejorVendedor.innerHTML = `${mejorVendedor}`;
+
+        }
+
+function Listar()
+{
+    for (let o of listaVendedores)
+    {
+
+          //TD
+          const td0 = document.createElement("td");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const td4 = document.createElement("td");
+            const td5 = document.createElement("td");
+            const td6 = document.createElement("td");
+            const td7 = document.createElement("td");
+            
+
+            td0.innerHTML = `N°${o.NroVendedor}`;
+            td1.innerHTML = o.Fecha;
+            td2.innerHTML = o.Cuil;
+            td3.innerHTML = o.Apellido;
+            td4.innerHTML = o.Nombre;
+            td5.innerHTML = o.FechaNacimiento;
+            td6.innerHTML = `$${o.Venta}`; 
+            td7.innerHTML = o.CantidadProductosVendidos;
+           
+           
+
+
+            //TR
+            const tr = document.createElement("tr");
+            tr.appendChild(td0);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+            tr.appendChild(td6);
+            tr.appendChild(td7);
+            
+           
+
+
+            //TBODY
+            const tbody = document.querySelector("tbody");
+            tbody.appendChild(tr);
+
+
+
+
+
+
+    }
+
+}
+
+
+function eliminar()
+{
+    localStorage.removeItem("lsVendedores");
+
+      //TBODY
+      const tbody = document.querySelector("tbody");
+            tbody.innerHTML = "";
+
+}
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
